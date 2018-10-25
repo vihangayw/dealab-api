@@ -1,6 +1,10 @@
 package com.zinios.dealab.models;
 // Generated Oct 25, 2018 2:43:44 PM by Hibernate Tools 3.6.0
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -11,9 +15,12 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "user", catalog = "dealab_db", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class User implements java.io.Serializable {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class User extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
+	@JsonIgnoreProperties({"email", "userName", "category"})
 	private Company company;
 	private String name;
 	private String email;
@@ -26,6 +33,7 @@ public class User implements java.io.Serializable {
 	private BigDecimal workLng;
 	private Integer loginType;
 	private String deviceToken;
+	@JsonIgnore
 	private String token;
 	private String deviceId;
 
@@ -33,6 +41,17 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String name, String email) {
+		this.name = name;
+		this.email = email;
+	}
+
+	public User(Company company, String email) {
+		this.company = company;
+		this.email = email;
+	}
+
+	public User(Company company, String name, String email) {
+		this.company = company;
 		this.name = name;
 		this.email = email;
 	}

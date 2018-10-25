@@ -7,9 +7,7 @@ public class Constants {
 
 	// JWT Claim ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public static final String CLAIM_TYPE_COMPANY = "auth-company";
-	public static final String CLAIM_TYPE_BRANCH = "auth-branch";
 	public static final String CLAIM_TYPE_USER = "auth-user";
-	public static final String CLAIM_USER_PASSWORD = "auth-branch";
 
 	// Response Message ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -37,5 +35,13 @@ public class Constants {
 	public static final String PASSWORD_NOT_VALID = "Password does not meet our criteria";
 	public static final String PASSWORD_NOT_SET = "Your invitiation is not accepted yet";
 	public static final String COMPANY_OBJECT = "Company_";
+	public static final int STATUS_INACTIVE = 0;
+	public static final int STATUS_ACTIVE = 1;
+
+	//user
+	public static final String USER_OBJECT = "User_";
+	public static final String NULL_USER = "User data is not valid";
+	public static final String INVALID_USER_DATA = "User data is not valid\nPlease check your details";
+	public static final String USER_NOT_FOUND = "We couldn't find a user with the provided details";
 
 }

@@ -1,6 +1,11 @@
 package com.zinios.dealab;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.name.Names;
+import com.zinios.dealab.dao.CompanyDao;
+import com.zinios.dealab.dao.UserDao;
+import com.zinios.dealab.dao.impl.CompanyDaoImpl;
+import com.zinios.dealab.dao.impl.UserDaoImpl;
 import com.zinios.dealab.services.ApplicationTimer;
 import com.zinios.dealab.services.AtomicCounter;
 import com.zinios.dealab.services.Counter;
@@ -34,9 +39,9 @@ public class Module extends AbstractModule {
 		// Set AtomicCounter as the implementation for CounterDisplay.
 		bind(Counter.class).to(AtomicCounter.class);
 
-//		bind(CompanyDao.class).annotatedWith(Names.named("company")).to(CompanyDaoImpl.class);
+		bind(CompanyDao.class).annotatedWith(Names.named("company")).to(CompanyDaoImpl.class);
 //		bind(BranchDao.class).annotatedWith(Names.named("branch")).to(BranchDaoImpl.class);
-//		bind(UserDao.class).annotatedWith(Names.named("user")).to(UserDaoImpl.class);
+		bind(UserDao.class).annotatedWith(Names.named("user")).to(UserDaoImpl.class);
 //		bind(ProductDao.class).annotatedWith(Names.named("product")).to(ProductDaoImpl.class);
 //		bind(MediaDao.class).annotatedWith(Names.named("media")).to(MediaDaoImpl.class);
 //		bind(ProductMediaDao.class).annotatedWith(Names.named("product_media")).to(ProductMediaDaoImpl.class);

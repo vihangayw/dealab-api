@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "template", catalog = "dealab_db")
-public class Template implements java.io.Serializable {
+public class Template extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Integer id;
 	private String bgImage;

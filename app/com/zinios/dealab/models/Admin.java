@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "admin", catalog = "dealab_db", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class Admin implements java.io.Serializable {
+public class Admin extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Integer id;
 	private String name;

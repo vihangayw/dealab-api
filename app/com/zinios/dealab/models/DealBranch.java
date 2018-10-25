@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "deal_branch", catalog = "dealab_db")
-public class DealBranch implements java.io.Serializable {
+public class DealBranch extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
 	private Deal deal;

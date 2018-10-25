@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "deal", catalog = "dealab_db")
-public class Deal implements java.io.Serializable {
+public class Deal extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
 	private Template template;

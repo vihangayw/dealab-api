@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "favourite", catalog = "dealab_db")
-public class Favourite implements java.io.Serializable {
+public class Favourite extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
 	private User user;

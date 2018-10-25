@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "branch", catalog = "dealab_db", uniqueConstraints = @UniqueConstraint(columnNames = "company_id"))
-public class Branch implements java.io.Serializable {
+public class Branch extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
 	private Company company;
