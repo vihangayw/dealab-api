@@ -58,6 +58,10 @@ public class CompanyService {
 		return companyDao.getSortedList(offset, limit);
 	}
 
+	public List<Company> getSortedInactiveCompanyList(int offset, int limit) {
+		return companyDao.getSortedInactiveCompanyList(offset, limit);
+	}
+
 	public Company updateCompany(Company companyOld, Company companyNew) {
 
 		if (companyNew.getName() != null)

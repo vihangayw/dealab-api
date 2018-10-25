@@ -13,8 +13,11 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+import scala.Option;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.zinios.dealab.utils.Constants.*;
 
@@ -68,7 +71,7 @@ public class CompanyController extends Controller {
 
 	}
 
-//	@With(SecuredAction.class)
+	//	@With(SecuredAction.class)
 //	@BodyParser.Of(BranchLoginBodyParser.class)
 //	public Result companyLogin() throws Exception {
 //
@@ -146,19 +149,33 @@ public class CompanyController extends Controller {
 //				StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
 //	}
 //
-//	@With(SecuredAction.class)
-//	public Result list(Option<Integer> offset, Option<Integer> limit) {
-//		if (offset.isDefined() && limit.isDefined() && !offset.isEmpty() && !limit.isEmpty()) {
-//			List<Company> sortedCompanyList = companyService.getSortedCompanyList(offset.get(), limit.get());
-//			if (sortedCompanyList == null) {
-//				return ok(new ResponseWrapper(SUCCESS, StatusCode.NOT_FOUND, new ArrayList<>()).jsonSerialize());
-//			}
-//			return ok(new ResponseWrapper(SUCCESS, StatusCode.FOUND, sortedCompanyList).jsonSerialize());
-//		} else {
-//			return badRequest(new ResponseWrapper(INVALID_PARAM,
-//					StatusCode.REQUEST_ERROR, null).jsonSerialize());
-//		}
-//	}
+	@With(SecuredAction.class)
+	public Result list(Option<Integer> offset, Option<Integer> limit) {
+		if (offset.isDefined() && limit.isDefined() && !offset.isEmpty() && !limit.isEmpty()) {
+			List<Company> sortedCompanyList = companyService.getSortedCompanyList(offset.get(), limit.get());
+			if (sortedCompanyList == null) {
+				return ok(new ResponseWrapper(SUCCESS, StatusCode.NOT_FOUND, new ArrayList<>()).jsonSerialize());
+			}
+			return ok(new ResponseWrapper(SUCCESS, StatusCode.FOUND, sortedCompanyList).jsonSerialize());
+		} else {
+			return badRequest(new ResponseWrapper(INVALID_PARAM,
+					StatusCode.REQUEST_ERROR, null).jsonSerialize());
+		}
+	}
+
+	@With(SecuredAction.class)
+	public Result listInactive(Option<Integer> offset, Option<Integer> limit) {
+		if (offset.isDefined() && limit.isDefined() && !offset.isEmpty() && !limit.isEmpty()) {
+			List<Company> sortedCompanyList = companyService.getSortedInactiveCompanyList(offset.get(), limit.get());
+			if (sortedCompanyList == null) {
+				return ok(new ResponseWrapper(SUCCESS, StatusCode.NOT_FOUND, new ArrayList<>()).jsonSerialize());
+			}
+			return ok(new ResponseWrapper(SUCCESS, StatusCode.FOUND, sortedCompanyList).jsonSerialize());
+		} else {
+			return badRequest(new ResponseWrapper(INVALID_PARAM,
+					StatusCode.REQUEST_ERROR, null).jsonSerialize());
+		}
+	}
 //
 //	@With(CompanySecuredAction.class)
 //	@BodyParser.Of(CompanyBodyParser.class)

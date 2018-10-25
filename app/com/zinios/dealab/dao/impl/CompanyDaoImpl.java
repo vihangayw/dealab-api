@@ -3,6 +3,7 @@ package com.zinios.dealab.dao.impl;
 import com.avaje.ebean.Model;
 import com.zinios.dealab.dao.CompanyDao;
 import com.zinios.dealab.models.Company;
+import com.zinios.dealab.utils.Constants;
 
 import java.util.List;
 
@@ -26,8 +27,17 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
+	public List<Company> getSortedInactiveCompanyList(int offset, int limit) {
+		return find.where()
+				.eq("status", Constants.STATUS_INACTIVE)
+				.orderBy("id desc").findPagedList(offset, limit).getList();
+	}
+
+	@Override
 	public List<Company> getSortedList(int offset, int limit) {
-		return find.where().orderBy("name").findPagedList(offset, limit).getList();
+		return find.where()
+				.eq("status", Constants.STATUS_ACTIVE)
+				.orderBy("name").findPagedList(offset, limit).getList();
 	}
 
 	@Override
