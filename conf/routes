@@ -20,6 +20,7 @@ GET         /v1/company/inactive          @com.zinios.dealab.controllers.Company
 
 ##User
 POST        /v1/user/login-company        @com.zinios.dealab.controllers.UserController.companyLogin()
+POST        /v1/user/login                @com.zinios.dealab.controllers.UserController.userLogin()
 #POST          /v1/company/add                        @com.zinios.dealab.controllers.CompanyController.add()
 #PATCH         /v1/company/set-password               @com.zinios.dealab.controllers.CompanyController.setPassword()
 #GET           /v1/company                            @com.zinios.dealab.controllers.CompanyController.list(offset: Option[Integer], limit: Option[Integer])

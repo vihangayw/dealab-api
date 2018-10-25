@@ -108,8 +108,8 @@ public class CompanyController extends Controller {
 //		return internalServerError(new ResponseWrapper(SERVER_ERROR,
 //				StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
 //	}
-//
-//	@With(SecuredAction.class)
+
+	//	@With(SecuredAction.class)
 //	@BodyParser.Of(PasswordBodyParser.class)
 //	public Result setPassword() {
 //

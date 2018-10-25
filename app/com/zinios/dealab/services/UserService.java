@@ -106,12 +106,12 @@ public class UserService {
 
 	public User login(String userName, String password, Company company) {
 
-		Transaction transaction = Ebean.beginTransaction();
 		try {
 			User login = userDao.login(userName, PasswordUtils.encrypt(password), company);
 			if (login == null) {
 				return null;
 			}
+			Transaction transaction = Ebean.beginTransaction();
 
 			login.setToken(jwtUtil.createAuthTokenUser(login.getId(), login.getCompany().getId()));
 			User updatedUser = userDao.update(login);
@@ -126,7 +126,32 @@ public class UserService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			transaction.end();
+			return null;
+		}
+	}
+
+	public User login(String userName, String password) {
+
+		try {
+			User login = userDao.login(userName, PasswordUtils.encrypt(password));
+			if (login == null) {
+				return null;
+			}
+			Transaction transaction = Ebean.beginTransaction();
+
+			login.setToken(jwtUtil.createAuthTokenCompany(login.getEmail(), String.valueOf(login.getId())));
+			User updatedUser = userDao.update(login);
+
+			if (updatedUser != null) {
+				transaction.commit();
+				transaction.end();
+				return updatedUser;
+			} else {
+				transaction.end();
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

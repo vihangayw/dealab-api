@@ -11,9 +11,11 @@ import java.util.List;
  */
 public interface UserDao extends BaseDao<User> {
 
-	User login(String userName, String password, Company company);
+	User login(String email, String password, Company company);
 
-	User findByUserName(String userName, Company company);
+	User login(String email, String password);
+
+	User findByUserName(String email, Company company);
 
 	User findByEmail(String email);
 

@@ -5,9 +5,11 @@ import com.zinios.dealab.authentication.SecuredAction;
 import com.zinios.dealab.controllers.util.ResponseWrapper;
 import com.zinios.dealab.controllers.util.StatusCode;
 import com.zinios.dealab.models.User;
+import com.zinios.dealab.models.parse.Login;
 import com.zinios.dealab.models.parse.LoginBranch;
 import com.zinios.dealab.models.parse.UserAuth;
 import com.zinios.dealab.parsers.BranchLoginBodyParser;
+import com.zinios.dealab.parsers.LoginBodyParser;
 import com.zinios.dealab.services.UserService;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -84,6 +86,32 @@ public class UserController extends Controller {
 		return ok(new ResponseWrapper(SUCCESS,
 				StatusCode.FOUND, new UserAuth(user, user.getToken())).jsonSerialize());
 
+	}
+
+	@With(SecuredAction.class)
+	@BodyParser.Of(LoginBodyParser.class)
+	public Result userLogin() {
+
+		//read data from body
+		Login asLogin = request().body().as(Login.class);
+		if (asLogin == null) {
+			return badRequest(new ResponseWrapper(INVALID_PARAM,
+					StatusCode.DATA_NULL, null).jsonSerialize());
+		}
+		if (StringUtils.isNullOrEmpty(asLogin.getEmail())
+				|| StringUtils.isNullOrEmpty(asLogin.getPassword())) {
+			return badRequest(new ResponseWrapper(INVALID_PARAM,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+
+		User user = userService.login(asLogin.getEmail(), asLogin.getPassword());
+
+		if (user == null) {
+			return badRequest(new ResponseWrapper(USER_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+		return ok(new ResponseWrapper(SUCCESS,
+				StatusCode.FOUND, new UserAuth(user, user.getToken())).jsonSerialize());
 
 	}
 //

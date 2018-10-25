@@ -14,7 +14,15 @@ public class UserDaoImpl implements UserDao {
 	public User login(String userName, String password, Company company) {
 		return find.where()
 				.eq("company", company)
-				.eq("userName", userName)
+				.eq("email", userName)
+				.eq("password", password)
+				.findUnique();
+	}
+
+	@Override
+	public User login(String userName, String password) {
+		return find.where()
+				.eq("email", userName)
 				.eq("password", password)
 				.findUnique();
 	}
@@ -23,7 +31,7 @@ public class UserDaoImpl implements UserDao {
 	public User findByUserName(String userName, Company company) {
 		return find.where()
 				.eq("company", company)
-				.eq("userName", userName)
+				.eq("email", userName)
 				.findUnique();
 	}
 
