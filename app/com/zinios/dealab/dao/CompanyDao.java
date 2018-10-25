@@ -12,7 +12,7 @@ public interface CompanyDao extends BaseDao<Company> {
 
 	Company findByEmail(String email);
 
-	Company findById(String id);
+	Company findById(Long id);
 
 	List<Company> getSortedInactiveCompanyList(int offset, int limit);
 

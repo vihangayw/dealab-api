@@ -24,6 +24,7 @@ public class User extends com.avaje.ebean.Model implements java.io.Serializable 
 	private Company company;
 	private String name;
 	private String email;
+	@JsonIgnore
 	private String password;
 	private String imageUrl;
 	private String mobile;

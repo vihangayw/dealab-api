@@ -10,6 +10,7 @@ import com.zinios.dealab.models.parse.LoginBranch;
 import com.zinios.dealab.models.parse.UserAuth;
 import com.zinios.dealab.parsers.BranchLoginBodyParser;
 import com.zinios.dealab.parsers.LoginBodyParser;
+import com.zinios.dealab.services.CompanyService;
 import com.zinios.dealab.services.UserService;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -28,6 +29,8 @@ public class UserController extends Controller {
 
 	@Inject
 	private UserService userService;
+	@Inject
+	private CompanyService companyService;
 
 //	@With(SecuredAction.class)
 //	@BodyParser.Of(CompanyBodyParser.class)
@@ -114,46 +117,7 @@ public class UserController extends Controller {
 				StatusCode.FOUND, new UserAuth(user, user.getToken())).jsonSerialize());
 
 	}
-//
-//	@With(SecuredAction.class)
-//	@BodyParser.Of(PasswordBodyParser.class)
-//	public Result setPassword() {
-//
-//		//read data from body
-//		CompanyPassword asPassword = request().body().as(CompanyPassword.class);
-//		if (asPassword == null) {
-//			return badRequest(new ResponseWrapper(NULL_COMPANY,
-//					StatusCode.DATA_NULL, null).jsonSerialize());
-//		}
-//		if (asPassword.getId() == null || asPassword.getPassword() == null) {
-//			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
-//					StatusCode.NOT_FOUND, null).jsonSerialize());
-//		}
-//		if (asPassword.getPassword().length() < 7) {
-//			return badRequest(new ResponseWrapper(PASSWORD_NOT_VALID,
-//					StatusCode.DATA_INVALID, null).jsonSerialize());
-//		}
-//
-//		Company company = userService.find(asPassword.getId());
-//
-//		if (company == null) {
-//			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
-//					StatusCode.NOT_FOUND, null).jsonSerialize());
-//		}
-//		if (company.getPassword() != null) {
-//			return forbidden(new ResponseWrapper(INVALID_URL,
-//					StatusCode.FORBIDDEN, null).jsonSerialize());
-//		}
-//
-//		Company updateCompany = userService.setPassword(company, asPassword.getPassword());
-//		if (updateCompany != null) {
-//			return ok(new ResponseWrapper(UPDATED,
-//					StatusCode.UPDATED, updateCompany).jsonSerialize());
-//		}
-//
-//		return internalServerError(new ResponseWrapper(SERVER_ERROR,
-//				StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
-//	}
+
 //
 //	@With(SecuredAction.class)
 //	public Result list(Option<Integer> offset, Option<Integer> limit) {

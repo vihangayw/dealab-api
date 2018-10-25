@@ -36,6 +36,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public User findByCompany(Company company) {
+		return find.where()
+				.eq("company", company)
+				.findUnique();
+	}
+
+	@Override
 	public User findByEmail(String email) {
 		return find.where()
 				.eq("email", email)

@@ -32,6 +32,7 @@ public class Constants {
 	public static final String ALREADY_REGISTERED = "A client with this email address is already registered to Dealab";
 	public static final String INVALID_COMPANY_DATA = "Company data is not valid\nPlease check your details";
 	public static final String COMPANY_NOT_FOUND = "We couldn't find a company with the provided details";
+	public static final String COMPANY_APPROVED = "This company is already approved";
 	public static final String PASSWORD_NOT_VALID = "Password does not meet our criteria";
 	public static final String PASSWORD_NOT_SET = "Your invitiation is not accepted yet";
 	public static final String COMPANY_OBJECT = "Company_";

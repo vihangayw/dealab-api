@@ -68,6 +68,10 @@ public class UserService {
 		return userDao.findByUserName(username, company);
 	}
 
+	public User findByCompany(Company company) {
+		return userDao.findByCompany(company);
+	}
+
 	public User findByEmail(String email) {
 		return userDao.findByEmail(email);
 	}
@@ -156,29 +160,28 @@ public class UserService {
 		}
 	}
 
-//	public User setPassword(User companyOld, String password) {
+	public User setPassword(User companyOld, String password) {
 
-//		Transaction transaction = Ebean.beginTransaction();
-//		try {
-//			companyOld.setPassword(PasswordUtils.encrypt(password));
-//			companyOld.setAuth(jwtUtil.createAuthTokenUser(companyOld.getEmail(), companyOld.getId()));
-//
-//			User updatedUser = userDao.update(companyOld);
-//
-//			if (updatedUser != null) {
-//				transaction.commit();
-//				transaction.end();
-//				return updatedUser;
-//			} else {
-//				transaction.end();
-//				return null;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			transaction.end();
-//			return null;
-//		}
-//	}
+		try {
+			companyOld.setPassword(PasswordUtils.encrypt(password));
+			companyOld.setToken(jwtUtil.createAuthTokenCompany(companyOld.getEmail(), String.valueOf(companyOld.getId())));
+
+			User updatedUser = userDao.update(companyOld);
+
+			Transaction transaction = Ebean.beginTransaction();
+			if (updatedUser != null) {
+				transaction.commit();
+				transaction.end();
+				return updatedUser;
+			} else {
+				transaction.end();
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 //	public User findByEmailID(String email, String id) {
 //		return userDao.findByEmailId(email, id);

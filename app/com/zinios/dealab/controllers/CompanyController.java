@@ -2,6 +2,7 @@ package com.zinios.dealab.controllers;
 
 import com.google.common.base.Strings;
 import com.zinios.dealab.authentication.SecuredAction;
+import com.zinios.dealab.authentication.UserSecuredAction;
 import com.zinios.dealab.controllers.util.ResponseWrapper;
 import com.zinios.dealab.controllers.util.StatusCode;
 import com.zinios.dealab.models.Company;
@@ -9,6 +10,8 @@ import com.zinios.dealab.models.User;
 import com.zinios.dealab.services.CompanyService;
 import com.zinios.dealab.services.UserService;
 import com.zinios.dealab.services.util.ValidatorUtil;
+import com.zinios.dealab.utils.Constants;
+import com.zinios.dealab.utils.IDGenerator;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -109,6 +112,47 @@ public class CompanyController extends Controller {
 //				StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
 //	}
 
+	@With(UserSecuredAction.class)
+	public Result approveCompany(String id) {
+		//User user = (User) ctx().args.get(Constants.USER_OBJECT);
+
+		if (id == null) {
+			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+
+		Company company = companyService.find(id);
+
+		if (company == null) {
+			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+		if (company.getStatus() == Constants.STATUS_ACTIVE) {
+			return badRequest(new ResponseWrapper(COMPANY_APPROVED,
+					StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
+		}
+
+		User user = userService.findByCompany(company);
+		if (user == null) {
+			return badRequest(new ResponseWrapper(USER_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+		company.setStatus(Constants.STATUS_ACTIVE);
+		company = companyService.update(company);
+
+		String pw = IDGenerator.next();
+		System.out.println(pw); //// TODO: 10/25/18 remove the pw print line
+		user.setPassword(pw);
+
+		User updatedUser = userService.setPassword(user, pw);
+		if (updatedUser != null) {
+			return ok(new ResponseWrapper(UPDATED,
+					StatusCode.UPDATED, updatedUser).jsonSerialize());
+		}
+
+		return internalServerError(new ResponseWrapper(SERVER_ERROR,
+				StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
+	}
 	//	@With(SecuredAction.class)
 //	@BodyParser.Of(PasswordBodyParser.class)
 //	public Result setPassword() {

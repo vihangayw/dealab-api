@@ -51,7 +51,7 @@ public class CompanyService {
 	}
 
 	public Company find(String id) {
-		return companyDao.findById(id);
+		return companyDao.findById(Long.valueOf(id));
 	}
 
 	public List<Company> getSortedCompanyList(int offset, int limit) {
@@ -69,10 +69,10 @@ public class CompanyService {
 		if (companyNew.getLogo() != null)
 			companyOld.setLogo(companyNew.getLogo());
 
-		Transaction transaction = Ebean.beginTransaction();
 		try {
 			Company updatedCompany = companyDao.update(companyOld);
 
+			Transaction transaction = Ebean.beginTransaction();
 			if (updatedCompany != null) {
 				transaction.commit();
 				transaction.end();
@@ -83,7 +83,26 @@ public class CompanyService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			transaction.end();
+			return null;
+		}
+	}
+
+	public Company update(Company company) {
+
+		try {
+			Company updatedCompany = companyDao.update(company);
+
+			Transaction transaction = Ebean.beginTransaction();
+			if (updatedCompany != null) {
+				transaction.commit();
+				transaction.end();
+				return updatedCompany;
+			} else {
+				transaction.end();
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

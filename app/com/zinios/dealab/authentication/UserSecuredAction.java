@@ -77,7 +77,6 @@ public class UserSecuredAction extends Action.Simple {
 						return CompletableFuture.completedFuture(unauthorized
 								(new ResponseWrapper(UNAUTHORIZED_ACCESS, StatusCode.UNAUTHORIZED, null).jsonSerialize()));
 					}
-					ctx.args.put(Constants.COMPANY_OBJECT, user.getCompany());
 					ctx.args.put(Constants.USER_OBJECT, user);
 					return delegate.call(ctx);
 				}

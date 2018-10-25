@@ -8,7 +8,7 @@ import com.zinios.dealab.utils.Constants;
 import java.util.List;
 
 public class CompanyDaoImpl implements CompanyDao {
-	private static Model.Find<String, Company> find = new Model.Finder<>(Company.class);
+	private static Model.Find<Long, Company> find = new Model.Finder<>(Company.class);
 
 	@Override
 	public Company add(Company company) {
@@ -22,7 +22,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public Company findById(String id) {
+	public Company findById(Long id) {
 		return find.byId(id);
 	}
 

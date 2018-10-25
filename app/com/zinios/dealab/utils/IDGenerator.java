@@ -17,7 +17,7 @@ public class IDGenerator {
 
 	public static String next() {
 		UUID u = UUID.randomUUID();
-		return toIDString(u.getMostSignificantBits()) + toIDString(u.getLeastSignificantBits());
+		return toIDString(u.getMostSignificantBits());
 	}
 
 	private static String toIDString(long i) {

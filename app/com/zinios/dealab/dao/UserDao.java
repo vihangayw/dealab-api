@@ -17,6 +17,8 @@ public interface UserDao extends BaseDao<User> {
 
 	User findByUserName(String email, Company company);
 
+	User findByCompany(Company company);
+
 	User findByEmail(String email);
 
 	List<User> getSortedList(int offset, int limit);

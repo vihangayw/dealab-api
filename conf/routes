@@ -3,24 +3,24 @@
 # ~~~~
 
 # Home page
-GET         /                             com.zinios.dealab.controllers.HomeController.index
+GET          /                              com.zinios.dealab.controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                 controllers.Assets.at(path="/public", file)
+GET          /assets/*file                  controllers.Assets.at(path="/public", file)
 
 ##Company
 #POST          /v1/company/login                      @com.zinios.dealab.controllers.CompanyController.companyLogin()
-POST        /v1/company/add               @com.zinios.dealab.controllers.CompanyController.add()
-#PATCH         /v1/company/set-password               @com.zinios.dealab.controllers.CompanyController.setPassword()
-GET         /v1/company                   @com.zinios.dealab.controllers.CompanyController.list(offset: Option[Integer], limit: Option[Integer])
-GET         /v1/company/inactive          @com.zinios.dealab.controllers.CompanyController.listInactive(offset: Option[Integer], limit: Option[Integer])
+POST         /v1/company/add                @com.zinios.dealab.controllers.CompanyController.add()
+PATCH        /v1/company/approve/:id        @com.zinios.dealab.controllers.CompanyController.approveCompany(id : String)
+GET          /v1/company                    @com.zinios.dealab.controllers.CompanyController.list(offset: Option[Integer], limit: Option[Integer])
+GET          /v1/company/inactive           @com.zinios.dealab.controllers.CompanyController.listInactive(offset: Option[Integer], limit: Option[Integer])
 #PATCH         /v1/company/update                     @com.zinios.dealab.controllers.CompanyController.update()
 #GET           /v1/company/:id                        @com.zinios.dealab.controllers.CompanyController.getCompany(id : String)
 
 
 ##User
-POST        /v1/user/login-company        @com.zinios.dealab.controllers.UserController.companyLogin()
-POST        /v1/user/login                @com.zinios.dealab.controllers.UserController.userLogin()
+POST         /v1/user/login-company         @com.zinios.dealab.controllers.UserController.companyLogin()
+POST         /v1/user/login                 @com.zinios.dealab.controllers.UserController.userLogin()
 #POST          /v1/company/add                        @com.zinios.dealab.controllers.CompanyController.add()
 #PATCH         /v1/company/set-password               @com.zinios.dealab.controllers.CompanyController.setPassword()
 #GET           /v1/company                            @com.zinios.dealab.controllers.CompanyController.list(offset: Option[Integer], limit: Option[Integer])
