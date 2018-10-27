@@ -19,13 +19,13 @@ public class JWTUtil {
 	 * @param companyId
 	 * @return Authentication Token
 	 */
-	public String createAuthTokenUser(Long userId, long companyId) throws UnsupportedEncodingException {
+	public String createAuthTokenCompany(Long userId, long companyId) throws UnsupportedEncodingException {
 		return JWT.create()
 				.withClaim("time", Calendar.getInstance().getTime())
 				.withClaim("userId", String.valueOf(userId))
 				.withClaim("companyId", String.valueOf(companyId))
-				.withClaim("type", Constants.CLAIM_TYPE_USER)
-				.withClaim("uuid", UUID.randomUUID().toString() + "")
+				.withClaim("type", Constants.CLAIM_TYPE_COMPANY)
+				.withClaim("uuid", UUID.randomUUID().toString())
 				.withIssuer("auth0")
 				.sign(Algorithm.HMAC512("secret"));
 	}
@@ -37,12 +37,12 @@ public class JWTUtil {
 	 * @param id
 	 * @return Authentication Token
 	 */
-	public String createAuthTokenCompany(String email, String id) throws UnsupportedEncodingException {
+	public String createAuthToken(String email, String id) throws UnsupportedEncodingException {
 		return JWT.create()
 				.withClaim("time", Calendar.getInstance().getTime())
 				.withClaim("email", email)
-				.withClaim("id", id.trim())
-				.withClaim("type", Constants.CLAIM_TYPE_COMPANY)
+				.withClaim("userId", id.trim())
+				.withClaim("type", Constants.CLAIM_TYPE_USER)
 				.withClaim("uuid", UUID.randomUUID().toString())
 				.withIssuer("auth0")
 				.sign(Algorithm.HMAC512("secret"));

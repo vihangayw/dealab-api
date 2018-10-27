@@ -1,13 +1,14 @@
 package com.zinios.dealab.controllers;
 
-import com.google.common.base.Strings;
 import com.zinios.dealab.authentication.SecuredAction;
 import com.zinios.dealab.authentication.UserSecuredAction;
 import com.zinios.dealab.controllers.util.ResponseWrapper;
 import com.zinios.dealab.controllers.util.StatusCode;
+import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Company;
 import com.zinios.dealab.models.User;
-import com.zinios.dealab.parsers.CompanyBodyParser;
+import com.zinios.dealab.parsers.BranchBodyParser;
+import com.zinios.dealab.services.BranchService;
 import com.zinios.dealab.services.CompanyService;
 import com.zinios.dealab.services.UserService;
 import com.zinios.dealab.services.util.ValidatorUtil;
@@ -29,45 +30,52 @@ import static com.zinios.dealab.utils.Constants.*;
 /**
  * Created by vihanga on 08/10/2018.
  */
-public class CompanyController extends Controller {
+public class BranchController extends Controller {
 
 	@Inject
 	private CompanyService companyService;
 	@Inject
+	private BranchService branchService;
+	@Inject
 	private UserService userService;
 
-	@With(SecuredAction.class)
-	@BodyParser.Of(CompanyBodyParser.class)
+	@With(UserSecuredAction.class)
+	@BodyParser.Of(BranchBodyParser.class)
 	public Result add() {
 
+		User user = (User) ctx().args.get(Constants.USER_OBJECT);
+
+		if (user.getCompany() == null || user.getCompany().getId() == null || user.getCompany().getId() == 0L) {
+			return unauthorized(new ResponseWrapper(UNAUTHORIZED_ACCESS,
+					StatusCode.UNAUTHORIZED, null).jsonSerialize());
+		}
 		//read data from body
-		Company asCompany = request().body().as(Company.class);
-		if (asCompany == null) {
-			return badRequest(new ResponseWrapper(NULL_COMPANY,
+		Branch branch = request().body().as(Branch.class);
+		if (branch == null) {
+			return badRequest(new ResponseWrapper(NULL_BRANCH,
 					StatusCode.DATA_NULL, null).jsonSerialize());
 		}
 
-		if (!ValidatorUtil.validateCompany(asCompany) || Strings.isNullOrEmpty(asCompany.getUserName())) {
-			return badRequest(new ResponseWrapper(INVALID_COMPANY_DATA,
+		if (!ValidatorUtil.validateBranch(branch)) {
+			return badRequest(new ResponseWrapper(INVALID_BRANCH_DATA,
 					StatusCode.DATA_INVALID, null).jsonSerialize());
 		}
 
-		User byEmail = userService.findByEmail(asCompany.getEmail());
-		if (byEmail != null && byEmail.getCompany() != null) {
-			return badRequest(new ResponseWrapper(ALREADY_REGISTERED,
+		if (user.getCompany().getId().longValue() != branch.getCompany().getId().longValue()) {
+			return forbidden(new ResponseWrapper(FORBIDDEN_,
+					StatusCode.FORBIDDEN, null).jsonSerialize());
+		}
+
+		if (branchService.isExisits(user.getCompany(), branch.getName(), branch.getPlaceId()) != null) {
+			return badRequest(new ResponseWrapper(BRANCH_EXISTS,
 					StatusCode.DATA_DUPLICATED, null).jsonSerialize());
 		}
-		asCompany.setStatus(STATUS_INACTIVE);
 
-		Company company = companyService.addCompany(asCompany);
-		if (byEmail != null) {
-			byEmail.setCompany(company);
-			userService.addUserCompany(byEmail);
-		} else {
-			User user = userService.addUser(new User(company, asCompany.getUserName(), asCompany.getEmail()));
-			if (user != null) {
-				return ok(new ResponseWrapper(ADDED, StatusCode.ADDED, user).jsonSerialize());
-			}
+		branch.setStatus(STATUS_INACTIVE);
+
+		Branch addBranch = branchService.addBranch(branch);
+		if (addBranch != null) {
+			return ok(new ResponseWrapper(ADDED, StatusCode.ADDED, user).jsonSerialize());
 		}
 
 		return internalServerError(new ResponseWrapper(SERVER_ERROR,
@@ -94,7 +102,7 @@ public class CompanyController extends Controller {
 //		Company company = companyService.findByEmail(asLogin.getEmail());
 //
 //		if (company == null) {
-//			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+//			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
 //					StatusCode.NOT_FOUND, null).jsonSerialize());
 //		}
 //
@@ -118,18 +126,18 @@ public class CompanyController extends Controller {
 		//User user = (User) ctx().args.get(Constants.USER_OBJECT);
 
 		if (id == null) {
-			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
 					StatusCode.NOT_FOUND, null).jsonSerialize());
 		}
 
 		Company company = companyService.find(id);
 
 		if (company == null) {
-			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
 					StatusCode.NOT_FOUND, null).jsonSerialize());
 		}
 		if (company.getStatus() == Constants.STATUS_ACTIVE) {
-			return badRequest(new ResponseWrapper(COMPANY_APPROVED,
+			return badRequest(new ResponseWrapper(BRANCH_APPROVED,
 					StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
 		}
 
@@ -154,6 +162,7 @@ public class CompanyController extends Controller {
 		return internalServerError(new ResponseWrapper(SERVER_ERROR,
 				StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
 	}
+
 	//	@With(SecuredAction.class)
 //	@BodyParser.Of(PasswordBodyParser.class)
 //	public Result setPassword() {
@@ -161,11 +170,11 @@ public class CompanyController extends Controller {
 //		//read data from body
 //		CompanyPassword asPassword = request().body().as(CompanyPassword.class);
 //		if (asPassword == null) {
-//			return badRequest(new ResponseWrapper(NULL_COMPANY,
+//			return badRequest(new ResponseWrapper(NULL_BRANCH,
 //					StatusCode.DATA_NULL, null).jsonSerialize());
 //		}
 //		if (asPassword.getId() == null || asPassword.getPassword() == null) {
-//			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+//			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
 //					StatusCode.NOT_FOUND, null).jsonSerialize());
 //		}
 //		if (asPassword.getPassword().length() < 7) {
@@ -176,7 +185,7 @@ public class CompanyController extends Controller {
 //		Company company = companyService.find(asPassword.getId());
 //
 //		if (company == null) {
-//			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+//			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
 //					StatusCode.NOT_FOUND, null).jsonSerialize());
 //		}
 //		if (company.getPassword() != null) {
@@ -229,16 +238,16 @@ public class CompanyController extends Controller {
 //		//read data from body
 //		Company asCompany = request().body().as(Company.class);
 //		if (asCompany == null) {
-//			return badRequest(new ResponseWrapper(NULL_COMPANY,
+//			return badRequest(new ResponseWrapper(NULL_BRANCH,
 //					StatusCode.DATA_NULL, null).jsonSerialize());
 //		}
 //
 //		if (asCompany.getId() == null) {
-//			return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+//			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
 //					StatusCode.NOT_FOUND, null).jsonSerialize());
 //		}
 //
-//		Company company = (Company) ctx().args.get(Constants.COMPANY_OBJECT);
+//		Company company = (Company) ctx().args.get(Constants.BRANCH_OBJECT);
 //
 //		if (!company.getId().equals(asCompany.getId())) {
 //			return forbidden(new ResponseWrapper(FORBIDDEN_,
@@ -257,7 +266,7 @@ public class CompanyController extends Controller {
 //
 //	@With(CompanySecuredAction.class)
 //	public Result getCompany(String id) {
-//		Company company = (Company) ctx().args.get(Constants.COMPANY_OBJECT);
+//		Company company = (Company) ctx().args.get(Constants.BRANCH_OBJECT);
 //
 //		if (!company.getId().equals(id)) {
 //			return forbidden(new ResponseWrapper(FORBIDDEN_,

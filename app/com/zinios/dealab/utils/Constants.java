@@ -14,6 +14,8 @@ public class Constants {
 	//common
 	public static final String UNAUTHORIZED_ACCESS = "Access denied";
 	public static final String INVALID_PAYLOAD = "Access is denied due to invalid credentials";
+	public static final int STATUS_INACTIVE = 0;
+	public static final int STATUS_ACTIVE = 1;
 
 	public static final String SERVER_ERROR = "Unexpected error occurred\nPlease contact administration";
 	public static final String ADDED = "Successfully added";
@@ -36,8 +38,6 @@ public class Constants {
 	public static final String PASSWORD_NOT_VALID = "Password does not meet our criteria";
 	public static final String PASSWORD_NOT_SET = "Your invitiation is not accepted yet";
 	public static final String COMPANY_OBJECT = "Company_";
-	public static final int STATUS_INACTIVE = 0;
-	public static final int STATUS_ACTIVE = 1;
 
 	//user
 	public static final String USER_OBJECT = "User_";
@@ -45,4 +45,11 @@ public class Constants {
 	public static final String INVALID_USER_DATA = "User data is not valid\nPlease check your details";
 	public static final String USER_NOT_FOUND = "We couldn't find a user with the provided details";
 
+	//branch
+	public static final String NULL_BRANCH = "Branch data is not valid";
+	public static final String INVALID_BRANCH_DATA = "Branch data is not valid\nPlease check your details";
+	public static final String BRANCH_NOT_FOUND = "We couldn't find a branch with the provided details";
+	public static final String BRANCH_APPROVED = "This branch is already approved";
+	public static final String BRANCH_EXISTS = "Branch Data already exists";
+	public static final String BRANCH_OBJECT = "Branch_";
 }

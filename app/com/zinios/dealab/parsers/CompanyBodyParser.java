@@ -1,4 +1,4 @@
-package com.zinios.dealab.controllers;
+package com.zinios.dealab.parsers;
 
 import com.zinios.dealab.models.Company;
 import com.zinios.dealab.parsers.util.CustomBodyParser;

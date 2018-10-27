@@ -51,4 +51,12 @@ public class PasswordUtils {
 			return (pw.toString());
 		}
 	}
+
+//	public static void main(String[] args) {
+//		try {
+//			System.out.println(encrypt("12345678"));  //E1G5aZYrOHSk31VOooYSfQ==
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

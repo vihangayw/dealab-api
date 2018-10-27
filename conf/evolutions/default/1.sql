@@ -45,7 +45,7 @@ create table dealab_db.branch (
   contact                   varchar(25),
   landmark                  varchar(255),
   notes                     varchar(1000),
-  constraint uq_branch_1 unique (company_id),
+  status                    integer,
   constraint pk_branch primary key (id))
 ;
 

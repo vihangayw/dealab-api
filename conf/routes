@@ -26,3 +26,8 @@ POST         /v1/user/login                 @com.zinios.dealab.controllers.UserC
 #GET           /v1/company                            @com.zinios.dealab.controllers.CompanyController.list(offset: Option[Integer], limit: Option[Integer])
 #PATCH         /v1/company/update                     @com.zinios.dealab.controllers.CompanyController.update()
 #GET           /v1
+
+
+##Branch
+POST        /v1/branch/add        @com.zinios.dealab.controllers.BranchController.add()
+#POST         /v1/branch/login                 @com.zinios.dealab.controllers.UserController.userLogin()

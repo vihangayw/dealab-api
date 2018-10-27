@@ -1,6 +1,7 @@
 package com.zinios.dealab.services.util;
 
 import com.google.api.client.util.Strings;
+import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Company;
 
 public class ValidatorUtil {
@@ -8,14 +9,17 @@ public class ValidatorUtil {
 	public static boolean validateCompany(Company company) {
 		return !Strings.isNullOrEmpty(company.getName()) && company.getCategory() != null;
 	}
-//
-//	public static boolean validateBranch(Branch branch) {
-//		return !Strings.isNullOrEmpty(branch.getName())
-//				&& !Strings.isNullOrEmpty(branch.getUserName())
-//				&& !Strings.isNullOrEmpty(branch.getPassword())
-//				&& branch.getCompany() != null
-//				&& branch.getCompany().getId() != null;
-//	}
+
+	public static boolean validateBranch(Branch branch) {
+		return !Strings.isNullOrEmpty(branch.getName())
+				&& !Strings.isNullOrEmpty(branch.getDescription())
+				&& !Strings.isNullOrEmpty(branch.getAddress())
+				&& !Strings.isNullOrEmpty(branch.getContact())
+				&& branch.getCompany() != null
+				&& branch.getCompany().getId() != null
+				&& branch.getLat() != null && branch.getLat().doubleValue() != 0
+				&& branch.getLng() != null && branch.getLng().doubleValue() != 0;
+	}
 //
 //	public static boolean validateProduct(Product product) {
 //		return !Strings.isNullOrEmpty(product.getName())

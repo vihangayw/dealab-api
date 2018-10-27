@@ -117,7 +117,7 @@ public class UserService {
 			}
 			Transaction transaction = Ebean.beginTransaction();
 
-			login.setToken(jwtUtil.createAuthTokenUser(login.getId(), login.getCompany().getId()));
+			login.setToken(jwtUtil.createAuthTokenCompany(login.getId(), login.getCompany().getId()));
 			User updatedUser = userDao.update(login);
 
 			if (updatedUser != null) {
@@ -143,7 +143,7 @@ public class UserService {
 			}
 			Transaction transaction = Ebean.beginTransaction();
 
-			login.setToken(jwtUtil.createAuthTokenCompany(login.getEmail(), String.valueOf(login.getId())));
+			login.setToken(jwtUtil.createAuthToken(login.getEmail(), String.valueOf(login.getId())));
 			User updatedUser = userDao.update(login);
 
 			if (updatedUser != null) {
@@ -164,7 +164,7 @@ public class UserService {
 
 		try {
 			companyOld.setPassword(PasswordUtils.encrypt(password));
-			companyOld.setToken(jwtUtil.createAuthTokenCompany(companyOld.getEmail(), String.valueOf(companyOld.getId())));
+			companyOld.setToken(jwtUtil.createAuthToken(companyOld.getEmail(), String.valueOf(companyOld.getId())));
 
 			User updatedUser = userDao.update(companyOld);
 
