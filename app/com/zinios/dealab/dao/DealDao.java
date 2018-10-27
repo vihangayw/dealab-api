@@ -8,11 +8,10 @@ import com.zinios.dealab.models.Deal;
  */
 public interface DealDao extends BaseDao<Deal> {
 
-//	Branch findById(Long id);
+	//	Branch findById(Long id);
 //
 //	List<Branch> getSortedInactiveBranchList(Company company, int offset, int limit);
 //
-//	List<Branch> getSortedList(Company company, int offset, int limit);
 //
 //	Branch isExists(Company company, String name, String placeId);
 

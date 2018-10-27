@@ -14,7 +14,7 @@ public class BranchDaoImpl implements BranchDao {
 
 	@Override
 	public Branch findById(Long id) {
-		return null;
+		return find.byId(id);
 	}
 
 	@Override

@@ -4,8 +4,6 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Transaction;
 import com.zinios.dealab.dao.CompanyDao;
 import com.zinios.dealab.models.Company;
-import com.zinios.dealab.utils.DateTimeUtils;
-import com.zinios.dealab.utils.JWTUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,18 +15,12 @@ import java.util.List;
 public class CompanyService {
 
 	@Inject
-	JWTUtil jwtUtil;
-	@Inject
-	private DateTimeUtils dateTimeUtils;
-	@Inject
 	@Named("company")
 	private CompanyDao companyDao;
 
 	public Company addCompany(Company company) {
-
-
-		Transaction transaction = Ebean.beginTransaction();
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			Company addedCompany = companyDao.add(company);
 
 			if (addedCompany == null) {
@@ -41,7 +33,6 @@ public class CompanyService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			transaction.end();
 			return null;
 		}
 	}
@@ -70,9 +61,9 @@ public class CompanyService {
 			companyOld.setLogo(companyNew.getLogo());
 
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			Company updatedCompany = companyDao.update(companyOld);
 
-			Transaction transaction = Ebean.beginTransaction();
 			if (updatedCompany != null) {
 				transaction.commit();
 				transaction.end();
@@ -90,9 +81,9 @@ public class CompanyService {
 	public Company update(Company company) {
 
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			Company updatedCompany = companyDao.update(company);
 
-			Transaction transaction = Ebean.beginTransaction();
 			if (updatedCompany != null) {
 				transaction.commit();
 				transaction.end();
@@ -107,53 +98,4 @@ public class CompanyService {
 		}
 	}
 
-	public Company login(Company companyOld) {
-//
-//		Transaction transaction = Ebean.beginTransaction();
-//		try {
-//			companyOld.setAuth(jwtUtil.createAuthTokenCompany(companyOld.getEmail(), companyOld.getId()));
-//			Company updatedCompany = companyDao.update(companyOld);
-//
-//			if (updatedCompany != null) {
-//				transaction.commit();
-//				transaction.end();
-//				return updatedCompany;
-//			} else {
-//				transaction.end();
-//				return null;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			transaction.end();
-		return null;
-//		}
-	}
-
-	public Company setPassword(Company companyOld, String password) {
-
-//		Transaction transaction = Ebean.beginTransaction();
-//		try {
-//			companyOld.setPassword(PasswordUtils.encrypt(password));
-//			companyOld.setAuth(jwtUtil.createAuthTokenCompany(companyOld.getEmail(), companyOld.getId()));
-//
-//			Company updatedCompany = companyDao.update(companyOld);
-//
-//			if (updatedCompany != null) {
-//				transaction.commit();
-//				transaction.end();
-//				return updatedCompany;
-//			} else {
-//				transaction.end();
-//				return null;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			transaction.end();
-		return null;
-//		}
-	}
-
-	public Company findByEmailID(String email, String id) {
-		return companyDao.findByEmailId(email, id);
-	}
 }

@@ -5,8 +5,6 @@ import com.avaje.ebean.Transaction;
 import com.zinios.dealab.dao.BranchDao;
 import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Company;
-import com.zinios.dealab.utils.DateTimeUtils;
-import com.zinios.dealab.utils.JWTUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,18 +16,12 @@ import java.util.List;
 public class BranchService {
 
 	@Inject
-	JWTUtil jwtUtil;
-	@Inject
-	private DateTimeUtils dateTimeUtils;
-	@Inject
 	@Named("branch")
 	private BranchDao branchDao;
 
 	public Branch addBranch(Branch company) {
-
-
-		Transaction transaction = Ebean.beginTransaction();
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			Branch addedBranch = branchDao.add(company);
 
 			if (addedBranch == null) {
@@ -42,7 +34,6 @@ public class BranchService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			transaction.end();
 			return null;
 		}
 	}
@@ -73,9 +64,9 @@ public class BranchService {
 			companyOld.setLandmark(companyNew.getLandmark());
 
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			Branch updatedBranch = branchDao.update(companyOld);
 
-			Transaction transaction = Ebean.beginTransaction();
 			if (updatedBranch != null) {
 				transaction.commit();
 				transaction.end();
@@ -94,12 +85,12 @@ public class BranchService {
 		return branchDao.isExists(company, name, placeId);
 	}
 
-	public Branch update(Branch company) {
+	public Branch update(Branch b) {
 
 		try {
-			Branch updatedBranch = branchDao.update(company);
-
 			Transaction transaction = Ebean.beginTransaction();
+			Branch updatedBranch = branchDao.update(b);
+
 			if (updatedBranch != null) {
 				transaction.commit();
 				transaction.end();

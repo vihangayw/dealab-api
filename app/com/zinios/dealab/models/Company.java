@@ -41,6 +41,10 @@ public class Company extends com.avaje.ebean.Model implements java.io.Serializab
 		this.name = name;
 	}
 
+	public Company(Long id) {
+		this.id = id;
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 

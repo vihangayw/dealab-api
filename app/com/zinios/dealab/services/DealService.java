@@ -4,11 +4,15 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Transaction;
 import com.zinios.dealab.dao.DealBranchDao;
 import com.zinios.dealab.dao.DealDao;
+import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Deal;
 import com.zinios.dealab.models.DealBranch;
+import com.zinios.dealab.models.entity.Location;
+import com.zinios.dealab.models.entity.Promotions;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 /**
  * Created by vihanga on 08/13/2018.
@@ -23,10 +27,9 @@ public class DealService {
 	private DealBranchDao dealBranchDao;
 
 	public Deal addDeal(Deal deal) {
-		Transaction transaction = Ebean.beginTransaction();
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			Deal addedDeal = dealDao.add(deal);
-
 			if (addedDeal == null) {
 				transaction.end();
 				return null;
@@ -37,7 +40,6 @@ public class DealService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			transaction.end();
 			return null;
 		}
 	}
@@ -46,8 +48,40 @@ public class DealService {
 		return dealDao.find(id);
 	}
 
-	public void assignBRanchDeal(DealBranch dealBranch) {
+	public void assignBranchDeal(DealBranch dealBranch) {
 		dealBranchDao.add(dealBranch);
+	}
+
+	public List<Location> getDealBranchList() {
+		return dealBranchDao.getDealBranchList();
+	}
+
+	public List<Location> getFutureDealBranchList() {
+		return dealBranchDao.getFutureDealBranchList();
+	}
+
+	public List<Location> getTodayDealBranchList() {
+		return dealBranchDao.getTodayDealBranchList();
+	}
+
+	public List<Location> getDealBranchListRadius(double lat, double lng) {
+		return dealBranchDao.getDealBranchListRadius(lat, lng);
+	}
+
+	public List<Location> getFutureDealBranchListRadius(double lat, double lng) {
+		return dealBranchDao.getFutureDealBranchListRadius(lat, lng);
+	}
+
+	public List<Location> getTodayDealBranchListRadius(double lat, double lng) {
+		return dealBranchDao.getTodayDealBranchListRadius(lat, lng);
+	}
+
+	public List<Promotions> getTodayDeals(Branch branch) {
+		return dealBranchDao.getTodayDeals(branch);
+	}
+
+	public List<Promotions> getFutureDeals(Branch branch) {
+		return dealBranchDao.getFutureDeals(branch);
 	}
 
 }

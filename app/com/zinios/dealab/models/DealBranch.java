@@ -17,7 +17,7 @@ public class DealBranch extends com.avaje.ebean.Model implements java.io.Seriali
 
 	private Long id;
 	private Deal deal;
-	@JsonIgnoreProperties({"company", "name", "description", "address", "placeId", "lat", "lng", "contact", "landmark", "notes"})
+	//@JsonIgnoreProperties({"company", "name", "description", "address", "placeId", "lat", "lng", "contact", "landmark", "notes"})
 	private Branch branch;
 
 	public DealBranch() {

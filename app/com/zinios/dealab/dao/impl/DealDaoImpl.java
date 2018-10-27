@@ -30,4 +30,6 @@ public class DealDaoImpl implements DealDao {
 	public Deal find(Long idToFind) {
 		return find.byId(idToFind);
 	}
+
+
 }

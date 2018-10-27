@@ -16,6 +16,7 @@ public class Constants {
 	public static final String INVALID_PAYLOAD = "Access is denied due to invalid credentials";
 	public static final int STATUS_INACTIVE = 0;
 	public static final int STATUS_ACTIVE = 1;
+	public static final double RADIUS_DISTANCE = 3.0; //Km
 
 	public static final String SERVER_ERROR = "Unexpected error occurred\nPlease contact administration";
 	public static final String ADDED = "Successfully added";

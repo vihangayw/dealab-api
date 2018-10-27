@@ -24,8 +24,8 @@ public class UserService {
 	private UserDao userDao;
 
 	public User addUser(User user) {
-		Transaction transaction = Ebean.beginTransaction();
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			User addedUser = userDao.add(user);
 
 			if (addedUser == null) {
@@ -38,15 +38,14 @@ public class UserService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			transaction.end();
 			return null;
 		}
 	}
 
 
 	public User addUserCompany(User user) {
-		Transaction transaction = Ebean.beginTransaction();
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			User update = userDao.update(user);
 
 			if (update == null) {
@@ -59,7 +58,6 @@ public class UserService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			transaction.end();
 			return null;
 		}
 	}
@@ -111,11 +109,12 @@ public class UserService {
 	public User login(String userName, String password, Company company) {
 
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			User login = userDao.login(userName, PasswordUtils.encrypt(password), company);
 			if (login == null) {
+				transaction.end();
 				return null;
 			}
-			Transaction transaction = Ebean.beginTransaction();
 
 			login.setToken(jwtUtil.createAuthTokenCompany(login.getId(), login.getCompany().getId()));
 			User updatedUser = userDao.update(login);
@@ -137,11 +136,12 @@ public class UserService {
 	public User login(String userName, String password) {
 
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			User login = userDao.login(userName, PasswordUtils.encrypt(password));
 			if (login == null) {
+				transaction.end();
 				return null;
 			}
-			Transaction transaction = Ebean.beginTransaction();
 
 			login.setToken(jwtUtil.createAuthToken(login.getEmail(), String.valueOf(login.getId())));
 			User updatedUser = userDao.update(login);
@@ -163,12 +163,12 @@ public class UserService {
 	public User setPassword(User companyOld, String password) {
 
 		try {
+			Transaction transaction = Ebean.beginTransaction();
 			companyOld.setPassword(PasswordUtils.encrypt(password));
 			companyOld.setToken(jwtUtil.createAuthToken(companyOld.getEmail(), String.valueOf(companyOld.getId())));
 
 			User updatedUser = userDao.update(companyOld);
 
-			Transaction transaction = Ebean.beginTransaction();
 			if (updatedUser != null) {
 				transaction.commit();
 				transaction.end();
