@@ -5,6 +5,7 @@ import com.avaje.ebean.Transaction;
 import com.zinios.dealab.dao.BranchDao;
 import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Company;
+import com.zinios.dealab.models.entity.Images;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,6 +45,10 @@ public class BranchService {
 
 	public Branch find(Long id) {
 		return branchDao.findById(id);
+	}
+
+	public List<Images> branchImages(Long id) {
+		return branchDao.branchImages(id);
 	}
 
 	public List<Branch> getSortedBranchList(Company company, int offset, int limit) {

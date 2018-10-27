@@ -13,8 +13,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import static com.zinios.dealab.utils.Constants.INVALID_PAYLOAD;
-import static com.zinios.dealab.utils.Constants.UNAUTHORIZED_ACCESS;
+import static com.zinios.dealab.utils.Constants.*;
 
 
 /**
@@ -49,7 +48,7 @@ public class SecuredAction extends Action.Simple {
 		}
 
 		String type = typeClaim.asString();
-		if (type.equals("auth")) {
+		if (type.equals("auth") || type.equals(CLAIM_TYPE_COMPANY) || type.equals(CLAIM_TYPE_USER)) {
 			return delegate.call(ctx);
 		} else {
 			return CompletableFuture.completedFuture(unauthorized

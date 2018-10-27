@@ -2,6 +2,7 @@ package com.zinios.dealab.dao;
 
 
 import com.zinios.dealab.models.Branch;
+import com.zinios.dealab.models.Company;
 import com.zinios.dealab.models.Review;
 import com.zinios.dealab.models.entity.Reviews;
 
@@ -13,5 +14,7 @@ import java.util.List;
 public interface ReviewDao extends BaseDao<Review> {
 
 	List<Reviews> getSortedList(Branch branch);
+
+	List<Reviews> getSortedList(Company company);
 
 }

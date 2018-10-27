@@ -19,22 +19,24 @@ POST         /v1/user/login-company              @com.zinios.dealab.controllers.
 POST         /v1/user/login                      @com.zinios.dealab.controllers.UserController.userLogin()
 
 ##Branch
-POST         /v1/branch/add                      @com.zinios.dealab.controllers.BranchController.add()
-PATCH        /v1/branch/approve/:id              @com.zinios.dealab.controllers.BranchController.approveBranch(id : String)
-GET          /v1/branch                          @com.zinios.dealab.controllers.BranchController.list(offset: Option[Integer], limit: Option[Integer], companyId: Option[String])
-GET          /v1/branch/inactive                 @com.zinios.dealab.controllers.BranchController.listInactive(offset: Option[Integer], limit: Option[Integer], companyId: Option[String])
+POST         /v1/branch/add                   @com.zinios.dealab.controllers.BranchController.add()
+PATCH        /v1/branch/approve/:id           @com.zinios.dealab.controllers.BranchController.approveBranch(id : String)
+GET          /v1/branch                       @com.zinios.dealab.controllers.BranchController.list(offset: Option[Integer], limit: Option[Integer], companyId: Option[String])
+GET          /v1/branch/inactive              @com.zinios.dealab.controllers.BranchController.listInactive(offset: Option[Integer], limit: Option[Integer], companyId: Option[String])
+GET          /v1/branch/detail/:id            @com.zinios.dealab.controllers.BranchController.branchDetail(id : String)
 
 ##Deal
-POST         /v1/deal/add                        @com.zinios.dealab.controllers.DealController.add()
-GET          /v1/deal/map-all                    @com.zinios.dealab.controllers.DealController.getDealBranchList
-GET          /v1/deal/map-all-future             @com.zinios.dealab.controllers.DealController.getFutureDealBranchList
-GET          /v1/deal/map-all-today              @com.zinios.dealab.controllers.DealController.getTodayDealBranchList
-GET          /v1/deal/map-boundary-all           @com.zinios.dealab.controllers.DealController.getDealBranchListRadius(lat: Option[String], lng: Option[String])
+POST         /v1/deal/add                     @com.zinios.dealab.controllers.DealController.add()
+GET          /v1/deal/map-all                 @com.zinios.dealab.controllers.DealController.getDealBranchList
+GET          /v1/deal/map-all-future          @com.zinios.dealab.controllers.DealController.getFutureDealBranchList
+GET          /v1/deal/map-all-today           @com.zinios.dealab.controllers.DealController.getTodayDealBranchList
+GET          /v1/deal/map-boundary-all        @com.zinios.dealab.controllers.DealController.getDealBranchListRadius(lat: Option[String], lng: Option[String])
 GET          /v1/deal/map-boundary-future        @com.zinios.dealab.controllers.DealController.getFutureDealBranchListRadius(lat: Option[String], lng: Option[String])
 GET          /v1/deal/map-boundary-today         @com.zinios.dealab.controllers.DealController.getTodayDealBranchListRadius(lat: Option[String], lng: Option[String])
-GET          /v1/deal/all-today                  @com.zinios.dealab.controllers.DealController.getTodayDeals(branchId: Option[String])
-GET          /v1/deal/all-future                 @com.zinios.dealab.controllers.DealController.getFutureDeals(branchId: Option[String])
+GET          /v1/deal/all-today               @com.zinios.dealab.controllers.DealController.getTodayDeals(branchId: Option[String])
+GET          /v1/deal/all-future              @com.zinios.dealab.controllers.DealController.getFutureDeals(branchId: Option[String])
 
 ##Reviews
-POST         /v1/review/add                      @com.zinios.dealab.controllers.ReviewController.add()
-GET          /v1/review/:branchId                @com.zinios.dealab.controllers.ReviewController.list(  branchId: String)
+POST         /v1/review/add                   @com.zinios.dealab.controllers.ReviewController.add()
+GET          /v1/review/:branchId             @com.zinios.dealab.controllers.ReviewController.list(  branchId: String)
+GET          /v1/review/all/:companyId        @com.zinios.dealab.controllers.ReviewController.companyReview(  companyId: String)

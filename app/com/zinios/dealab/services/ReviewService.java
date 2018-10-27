@@ -4,6 +4,7 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Transaction;
 import com.zinios.dealab.dao.ReviewDao;
 import com.zinios.dealab.models.Branch;
+import com.zinios.dealab.models.Company;
 import com.zinios.dealab.models.Review;
 import com.zinios.dealab.models.entity.Reviews;
 import com.zinios.dealab.utils.DateTimeUtils;
@@ -48,6 +49,10 @@ public class ReviewService {
 
 	public List<Reviews> getSortedReviewList(Branch branch) {
 		return reviewDao.getSortedList(branch);
+	}
+
+	public List<Reviews> getSortedReviewList(Company company) {
+		return reviewDao.getSortedList(company);
 	}
 
 	public Review update(Review review) {

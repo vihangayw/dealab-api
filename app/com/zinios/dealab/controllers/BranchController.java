@@ -1,13 +1,16 @@
 package com.zinios.dealab.controllers;
 
+import com.zinios.dealab.authentication.SecuredAction;
 import com.zinios.dealab.authentication.UserSecuredAction;
 import com.zinios.dealab.controllers.util.ResponseWrapper;
 import com.zinios.dealab.controllers.util.StatusCode;
 import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Company;
 import com.zinios.dealab.models.User;
+import com.zinios.dealab.models.parse.BranchWrapper;
 import com.zinios.dealab.parsers.BranchBodyParser;
 import com.zinios.dealab.services.BranchService;
+import com.zinios.dealab.services.ReviewService;
 import com.zinios.dealab.services.util.ValidatorUtil;
 import com.zinios.dealab.utils.Constants;
 import play.mvc.BodyParser;
@@ -30,6 +33,8 @@ public class BranchController extends Controller {
 
 	@Inject
 	private BranchService branchService;
+	@Inject
+	private ReviewService reviewService;
 
 	@With(UserSecuredAction.class)
 	@BodyParser.Of(BranchBodyParser.class)
@@ -106,6 +111,32 @@ public class BranchController extends Controller {
 		return internalServerError(new ResponseWrapper(SERVER_ERROR,
 				StatusCode.DATA_UPDATE_FAIL, null).jsonSerialize());
 	}
+
+	@With(SecuredAction.class)
+	public Result branchDetail(String id) {
+		//User user = (User) ctx().args.get(Constants.USER_OBJECT);
+
+		if (id == null) {
+			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+
+		Branch branch = branchService.find(id);
+
+		if (branch == null) {
+			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+
+		return ok(new ResponseWrapper(SUCCESS,
+				StatusCode.FOUND,
+				new BranchWrapper(
+						reviewService.getSortedReviewList(branch),
+						branchService.branchImages(branch.getId()),
+						branch,
+						branch.getCompany())).jsonSerialize());
+	}
+
 
 	@With(UserSecuredAction.class)
 	public Result list(Option<Integer> offset, Option<Integer> limit, Option<String> companyId) {

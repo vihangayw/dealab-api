@@ -5,10 +5,12 @@ import com.zinios.dealab.authentication.UserSecuredAction;
 import com.zinios.dealab.controllers.util.ResponseWrapper;
 import com.zinios.dealab.controllers.util.StatusCode;
 import com.zinios.dealab.models.Branch;
+import com.zinios.dealab.models.Company;
 import com.zinios.dealab.models.Review;
 import com.zinios.dealab.models.User;
 import com.zinios.dealab.parsers.RreviewBodyParser;
 import com.zinios.dealab.services.BranchService;
+import com.zinios.dealab.services.CompanyService;
 import com.zinios.dealab.services.ReviewService;
 import com.zinios.dealab.utils.Constants;
 import play.Logger;
@@ -31,6 +33,8 @@ public class ReviewController extends Controller {
 	private ReviewService reviewService;
 	@Inject
 	private BranchService branchService;
+	@Inject
+	private CompanyService companyService;
 
 	@With(UserSecuredAction.class)
 	@BodyParser.Of(RreviewBodyParser.class)
@@ -83,6 +87,32 @@ public class ReviewController extends Controller {
 
 			return ok(new ResponseWrapper(SUCCESS, StatusCode.FOUND,
 					reviewService.getSortedReviewList(branch)).jsonSerialize());
+
+		} catch (NumberFormatException e) {
+			Logger.error("Error", e);
+			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+	}
+
+
+	@With(SecuredAction.class)
+	public Result companyReview(String companyId) {
+		if (companyId == null) {
+			return badRequest(new ResponseWrapper(BRANCH_NOT_FOUND,
+					StatusCode.NOT_FOUND, null).jsonSerialize());
+		}
+		try {
+			long id = Long.parseLong(companyId);
+			Company company = companyService.find(id);
+
+			if (company == null) {
+				return badRequest(new ResponseWrapper(COMPANY_NOT_FOUND,
+						StatusCode.NOT_FOUND, null).jsonSerialize());
+			}
+
+			return ok(new ResponseWrapper(SUCCESS, StatusCode.FOUND,
+					reviewService.getSortedReviewList(company)).jsonSerialize());
 
 		} catch (NumberFormatException e) {
 			Logger.error("Error", e);

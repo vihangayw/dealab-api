@@ -45,6 +45,10 @@ public class CompanyService {
 		return companyDao.findById(Long.valueOf(id));
 	}
 
+	public Company find(Long id) {
+		return companyDao.findById(id);
+	}
+
 	public List<Company> getSortedCompanyList(int offset, int limit) {
 		return companyDao.getSortedList(offset, limit);
 	}

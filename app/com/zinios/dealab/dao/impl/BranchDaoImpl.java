@@ -1,10 +1,10 @@
 package com.zinios.dealab.dao.impl;
 
-import com.avaje.ebean.Expr;
-import com.avaje.ebean.Model;
+import com.avaje.ebean.*;
 import com.zinios.dealab.dao.BranchDao;
 import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Company;
+import com.zinios.dealab.models.entity.Images;
 import com.zinios.dealab.utils.Constants;
 
 import java.util.List;
@@ -64,5 +64,18 @@ public class BranchDaoImpl implements BranchDao {
 	@Override
 	public Branch find(Long idToFind) {
 		return find.byId(idToFind);
+	}
+
+	@Override
+	public List<Images> branchImages(Long idToFind) {
+		String sql = "select i.url as url " +
+				" from image i, branch b " +
+				" where i.branch_id = b.id && b.id = " + idToFind;
+		Query<Images> query = Ebean.find(Images.class);
+		query.setRawSql(RawSqlBuilder
+				.parse(sql)
+				.create());
+
+		return query.findList();
 	}
 }
