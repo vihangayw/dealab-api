@@ -20,7 +20,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class User extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
-	@JsonIgnoreProperties({"email", "userName", "category"})
+	@JsonIgnoreProperties({"email", "name", "category"})
 	private Company company;
 	private String name;
 	private String email;

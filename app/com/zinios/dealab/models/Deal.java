@@ -2,9 +2,12 @@ package com.zinios.dealab.models;
 // Generated Oct 25, 2018 2:43:44 PM by Hibernate Tools 3.6.0
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -13,10 +16,13 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "deal", catalog = "dealab_db")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Deal extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
 	private Template template;
+	@JsonIgnore
+	private Company company;
 	private String description;
 	private String note;
 	private String imageUrl;
@@ -26,6 +32,9 @@ public class Deal extends com.avaje.ebean.Model implements java.io.Serializable 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss z")
 	private Date endDate;
 	private Integer status;
+
+	@Transient
+	private List<Branch> branches;
 
 	public Deal() {
 	}
@@ -117,4 +126,21 @@ public class Deal extends com.avaje.ebean.Model implements java.io.Serializable 
 		this.status = status;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id", nullable = false)
+	public Company getCompany() {
+		return this.company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public List<Branch> getBranches() {
+		return branches;
+	}
+
+	public void setBranches(List<Branch> branches) {
+		this.branches = branches;
+	}
 }

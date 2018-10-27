@@ -37,7 +37,6 @@ public class Constants {
 	public static final String COMPANY_APPROVED = "This company is already approved";
 	public static final String PASSWORD_NOT_VALID = "Password does not meet our criteria";
 	public static final String PASSWORD_NOT_SET = "Your invitiation is not accepted yet";
-	public static final String COMPANY_OBJECT = "Company_";
 
 	//user
 	public static final String USER_OBJECT = "User_";
@@ -51,5 +50,10 @@ public class Constants {
 	public static final String BRANCH_NOT_FOUND = "We couldn't find a branch with the provided details";
 	public static final String BRANCH_APPROVED = "This branch is already approved";
 	public static final String BRANCH_EXISTS = "Branch Data already exists";
-	public static final String BRANCH_OBJECT = "Branch_";
+
+	//deal
+	public static final String NULL_DEAL = "Deal data is not valid";
+	public static final String INVALID_DEAL_DATA = "Deal data is not valid\nPlease check your details";
+	public static final String DEAL_NOT_FOUND = "We couldn't find a deal with the provided details";
+	public static final String DEAL_EXISTS = "Deal Data already exists";
 }

@@ -75,6 +75,7 @@ create table dealab_db.company (
 create table dealab_db.deal (
   id                        bigint auto_increment not null,
   template_id               integer,
+  company_id                bigint not null,
   description               varchar(1000),
   note                      varchar(500),
   image_url                 varchar(2000),
@@ -163,26 +164,28 @@ alter table dealab_db.company add constraint fk_company_category_3 foreign key (
 create index ix_company_category_3 on dealab_db.company (category_id);
 alter table dealab_db.deal add constraint fk_deal_template_4 foreign key (template_id) references dealab_db.template (id) on delete restrict on update restrict;
 create index ix_deal_template_4 on dealab_db.deal (template_id);
-alter table dealab_db.deal_branch add constraint fk_deal_branch_deal_5 foreign key (deal_id) references dealab_db.deal (id) on delete restrict on update restrict;
-create index ix_deal_branch_deal_5 on dealab_db.deal_branch (deal_id);
-alter table dealab_db.deal_branch add constraint fk_deal_branch_branch_6 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
-create index ix_deal_branch_branch_6 on dealab_db.deal_branch (branch_id);
-alter table dealab_db.favourite add constraint fk_favourite_user_7 foreign key (user_id) references dealab_db.user (id) on delete restrict on update restrict;
-create index ix_favourite_user_7 on dealab_db.favourite (user_id);
-alter table dealab_db.favourite add constraint fk_favourite_branch_8 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
-create index ix_favourite_branch_8 on dealab_db.favourite (branch_id);
-alter table dealab_db.image add constraint fk_image_branch_9 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
-create index ix_image_branch_9 on dealab_db.image (branch_id);
-alter table dealab_db.image add constraint fk_image_company_10 foreign key (company_id) references dealab_db.company (id) on delete restrict on update restrict;
-create index ix_image_company_10 on dealab_db.image (company_id);
-alter table dealab_db.open_hours add constraint fk_open_hours_branch_11 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
-create index ix_open_hours_branch_11 on dealab_db.open_hours (branch_id);
-alter table dealab_db.review add constraint fk_review_user_12 foreign key (user_id) references dealab_db.user (id) on delete restrict on update restrict;
-create index ix_review_user_12 on dealab_db.review (user_id);
-alter table dealab_db.review add constraint fk_review_branch_13 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
-create index ix_review_branch_13 on dealab_db.review (branch_id);
-alter table dealab_db.user add constraint fk_user_company_14 foreign key (company_id) references dealab_db.company (id) on delete restrict on update restrict;
-create index ix_user_company_14 on dealab_db.user (company_id);
+alter table dealab_db.deal add constraint fk_deal_company_5 foreign key (company_id) references dealab_db.company (id) on delete restrict on update restrict;
+create index ix_deal_company_5 on dealab_db.deal (company_id);
+alter table dealab_db.deal_branch add constraint fk_deal_branch_deal_6 foreign key (deal_id) references dealab_db.deal (id) on delete restrict on update restrict;
+create index ix_deal_branch_deal_6 on dealab_db.deal_branch (deal_id);
+alter table dealab_db.deal_branch add constraint fk_deal_branch_branch_7 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
+create index ix_deal_branch_branch_7 on dealab_db.deal_branch (branch_id);
+alter table dealab_db.favourite add constraint fk_favourite_user_8 foreign key (user_id) references dealab_db.user (id) on delete restrict on update restrict;
+create index ix_favourite_user_8 on dealab_db.favourite (user_id);
+alter table dealab_db.favourite add constraint fk_favourite_branch_9 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
+create index ix_favourite_branch_9 on dealab_db.favourite (branch_id);
+alter table dealab_db.image add constraint fk_image_branch_10 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
+create index ix_image_branch_10 on dealab_db.image (branch_id);
+alter table dealab_db.image add constraint fk_image_company_11 foreign key (company_id) references dealab_db.company (id) on delete restrict on update restrict;
+create index ix_image_company_11 on dealab_db.image (company_id);
+alter table dealab_db.open_hours add constraint fk_open_hours_branch_12 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
+create index ix_open_hours_branch_12 on dealab_db.open_hours (branch_id);
+alter table dealab_db.review add constraint fk_review_user_13 foreign key (user_id) references dealab_db.user (id) on delete restrict on update restrict;
+create index ix_review_user_13 on dealab_db.review (user_id);
+alter table dealab_db.review add constraint fk_review_branch_14 foreign key (branch_id) references dealab_db.branch (id) on delete restrict on update restrict;
+create index ix_review_branch_14 on dealab_db.review (branch_id);
+alter table dealab_db.user add constraint fk_user_company_15 foreign key (company_id) references dealab_db.company (id) on delete restrict on update restrict;
+create index ix_user_company_15 on dealab_db.user (company_id);
 
 
 

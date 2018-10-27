@@ -1,6 +1,8 @@
 package com.zinios.dealab.models;
 // Generated Oct 25, 2018 2:43:44 PM by Hibernate Tools 3.6.0
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -10,10 +12,12 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "deal_branch", catalog = "dealab_db")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DealBranch extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
 	private Deal deal;
+	@JsonIgnoreProperties({"company", "name", "description", "address", "placeId", "lat", "lng", "contact", "landmark", "notes"})
 	private Branch branch;
 
 	public DealBranch() {

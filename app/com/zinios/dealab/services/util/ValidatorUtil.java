@@ -3,6 +3,7 @@ package com.zinios.dealab.services.util;
 import com.google.api.client.util.Strings;
 import com.zinios.dealab.models.Branch;
 import com.zinios.dealab.models.Company;
+import com.zinios.dealab.models.Deal;
 
 public class ValidatorUtil {
 
@@ -20,14 +21,13 @@ public class ValidatorUtil {
 				&& branch.getLat() != null && branch.getLat().doubleValue() != 0
 				&& branch.getLng() != null && branch.getLng().doubleValue() != 0;
 	}
-//
-//	public static boolean validateProduct(Product product) {
-//		return !Strings.isNullOrEmpty(product.getName())
-//				&& !Strings.isNullOrEmpty(product.getDescription())
-//				&& !Strings.isNullOrEmpty(product.getCode())
-//				&& product.getCompany() != null
-//				&& product.getCompany().getId() != null;
-//	}
+
+	public static boolean validateDeal(Deal deal) {
+		return !Strings.isNullOrEmpty(deal.getDescription())
+				&& !Strings.isNullOrEmpty(deal.getNote())
+				&& deal.getStartDate() != null && !Strings.isNullOrEmpty(deal.getStartDate().toString())
+				&& deal.getEndDate() != null && !Strings.isNullOrEmpty(deal.getEndDate().toString());
+	}
 //
 //	public static boolean validateMedia(Media media) {
 //		return media.getType() != null

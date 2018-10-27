@@ -3,6 +3,7 @@ package com.zinios.dealab.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,11 +15,12 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "branch", catalog = "dealab_db")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Branch extends com.avaje.ebean.Model implements java.io.Serializable {
 
 	private Long id;
-	@JsonIgnoreProperties({"email", "userName", "category"})
+	@JsonIgnoreProperties({"email", "name", "category"})
 	private Company company;
 	private String name;
 	private String description;

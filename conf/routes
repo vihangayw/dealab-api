@@ -31,3 +31,6 @@ POST         /v1/user/login                 @com.zinios.dealab.controllers.UserC
 ##Branch
 POST        /v1/branch/add        @com.zinios.dealab.controllers.BranchController.add()
 #POST         /v1/branch/login                 @com.zinios.dealab.controllers.UserController.userLogin()
+
+##Deal
+POST        /v1/deal/add          @com.zinios.dealab.controllers.DealController.add()
