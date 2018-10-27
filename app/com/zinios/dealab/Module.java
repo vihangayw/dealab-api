@@ -42,11 +42,7 @@ public class Module extends AbstractModule {
 		bind(UserDao.class).annotatedWith(Names.named("user")).to(UserDaoImpl.class);
 		bind(DealDao.class).annotatedWith(Names.named("deal")).to(DealDaoImpl.class);
 		bind(DealBranchDao.class).annotatedWith(Names.named("deal_branch")).to(DealBranchDaoImpl.class);
-//		bind(ProductMediaDao.class).annotatedWith(Names.named("product_media")).to(ProductMediaDaoImpl.class);
-//		bind(DisplayDao.class).annotatedWith(Names.named("display")).to(DisplayDaoImpl.class);
-//		bind(DisplayMediaDao.class).annotatedWith(Names.named("display_media")).to(DisplayMediaDaoImpl.class);
-//		bind(MDMDao.class).annotatedWith(Names.named("mdm")).to(MDMDaoImpl.class);
-//		bind(ProductLocationDao.class).annotatedWith(Names.named("product_location")).to(ProductLocationDaoImpl.class);
+		bind(ReviewDao.class).annotatedWith(Names.named("review")).to(ReviewDaoImpl.class);
 
 	}
 

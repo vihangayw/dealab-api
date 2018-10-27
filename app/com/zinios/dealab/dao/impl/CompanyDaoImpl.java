@@ -37,12 +37,15 @@ public class CompanyDaoImpl implements CompanyDao {
 	public List<Company> getSortedList(int offset, int limit) {
 		return find.where()
 				.eq("status", Constants.STATUS_ACTIVE)
-				.orderBy("name").findPagedList(offset, limit).getList();
+				.orderBy("name")
+				.findPagedList(offset, limit).getList();
 	}
 
 	@Override
 	public Company findByEmailId(String email, String id) {
-		return find.where().eq("email", email).ne("id", email).findUnique();
+		return find.where()
+				.eq("email", email)
+				.ne("id", email).findUnique();
 	}
 
 	@Override

@@ -42,6 +42,10 @@ public class BranchService {
 		return branchDao.findById(Long.valueOf(id));
 	}
 
+	public Branch find(Long id) {
+		return branchDao.findById(id);
+	}
+
 	public List<Branch> getSortedBranchList(Company company, int offset, int limit) {
 		return branchDao.getSortedList(company, offset, limit);
 	}

@@ -34,3 +34,7 @@ GET          /v1/deal/map-boundary-future        @com.zinios.dealab.controllers.
 GET          /v1/deal/map-boundary-today         @com.zinios.dealab.controllers.DealController.getTodayDealBranchListRadius(lat: Option[String], lng: Option[String])
 GET          /v1/deal/all-today                  @com.zinios.dealab.controllers.DealController.getTodayDeals(branchId: Option[String])
 GET          /v1/deal/all-future                 @com.zinios.dealab.controllers.DealController.getFutureDeals(branchId: Option[String])
+
+##Reviews
+POST         /v1/review/add                      @com.zinios.dealab.controllers.ReviewController.add()
+GET          /v1/review/:branchId                @com.zinios.dealab.controllers.ReviewController.list(  branchId: String)

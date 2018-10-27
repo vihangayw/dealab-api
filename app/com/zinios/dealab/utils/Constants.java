@@ -52,6 +52,13 @@ public class Constants {
 	public static final String BRANCH_APPROVED = "This branch is already approved";
 	public static final String BRANCH_EXISTS = "Branch Data already exists";
 
+	//review
+	public static final String NULL_REVIEW = "Reviews data is not valid";
+	public static final String INVALID_REVIEW_DATA = "Reviews data is not valid\nPlease check your details";
+	public static final String REVIEW_NOT_FOUND = "We couldn't find a review with the provided details";
+	public static final String REVIEW_APPROVED = "This review is already approved";
+	public static final String REVIEW_EXISTS = "Reviews Data already exists";
+
 	//deal
 	public static final String NULL_DEAL = "Deal data is not valid";
 	public static final String INVALID_DEAL_DATA = "Deal data is not valid\nPlease check your details";
