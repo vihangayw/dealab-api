@@ -16,6 +16,8 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
+  filters,
+  evolutions,
   "com.auth0" % "java-jwt" % "3.1.0",
   "mysql" % "mysql-connector-java" % "5.1.6",
   "com.google.firebase" % "firebase-admin" % "4.1.7")
